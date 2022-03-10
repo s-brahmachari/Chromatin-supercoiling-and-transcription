@@ -60,7 +60,6 @@ class FE_fixed_nucl:
         print("--------------\nPositive nucleosomes\nBinding energy: {:.1f} kT\nWrithe: {:.2f}\nstretched DNA: 0.0 nm\n".format(self.e_pos, self.wp)) 
         print("=================================")
 
-
     def g_f(self): 
         R"""
         Force-extension free energy density in units kT/nm 
@@ -120,10 +119,16 @@ class FE_fixed_nucl:
             res = (Emin_tot + E_nuc_bind(), lk - wr_nuc, 0.0, wr_nuc)
 
         elif L_free - lp <= self.lp_cutOff: 
-            # NO stretched phase, only plectoneme and nucleosome twisting + writhing
-            #minimize over linking number partition
-            min_val = minimize_scalar(E_plect_nuc, method='bounded', bounds=(0,1))
-            res = (min_val.fun + E_nuc_bind(), 0.0, (lk-wr_nuc)*(1-min_val.x), wr_nuc) 
+            if N==0:
+                # NO stretched phase or nucleosomes, only plectoneme
+                Eplect = 2*np.pi**2*self.P*(lk - wr_nuc)**2/lp
+                res = (Eplect, 0.0, lk - wr_nuc, 0.0)
+            else:
+                # NO stretched phase, only plectoneme and nucleosome twisting + writhing
+                #minimize over linking number partition
+                min_val = minimize_scalar(E_plect_nuc, method='bounded', bounds=(0,1))
+                res = (min_val.fun + E_nuc_bind(), 0.0, (lk-wr_nuc)*(1-min_val.x), wr_nuc) 
+            
 
         else:    
             # Coexistence of stretched, plectoneme, and nucleosome phases
