@@ -9,7 +9,7 @@ class FE_fixed_nucl:
         Eopen=None, 
         force=1.0, 
         L_DNA=1000.0,
-        wr_open=1.0, 
+        wr_open=-0.7, 
         wr_neg=-1.4, 
         wr_pos=-0.4,
         ):
@@ -19,7 +19,7 @@ class FE_fixed_nucl:
         self.P = 25.0       # DNA plectoneme twist persistence length (nm)
         self.h = 3.5        # DNA helix repeat length (nm)
         self.l_nucl = 60.0       # DNA length absorbed by a nucleosome (nm)
-        self.l_nucl_ext = 20.0   # free DNA length for open nucleosomes (nm)
+        self.l_nucl_ext = 10.0   # free DNA length for open nucleosomes (nm)
         self.f = force * 0.25   # external force in kT/nm units
         self.L_DNA = L_DNA      # total DNA length (nm)
         self.lp_cutOff =10.0    # cut-off size for small plectoneme (nm)
