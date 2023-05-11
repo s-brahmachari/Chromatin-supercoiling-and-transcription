@@ -58,6 +58,7 @@ def main():
         hf.create_dataset('Lkp', data=np.array(Lkp))
         hf.create_dataset('Wrnuc', data=np.array(wrnuc))
         hf.create_dataset('Lp', data=np.array(Lp))
+        hf.create_dataset('sigma', data=sig_vals)
 
 
 
