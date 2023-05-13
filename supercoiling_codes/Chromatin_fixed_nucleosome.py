@@ -4,9 +4,9 @@ from scipy.optimize import minimize_scalar
 
 class FE_fixed_nucl:
     def __init__(self, 
-        Eneg = -40.0, 
-        Epos=None, 
-        Eopen=None, 
+        Eneg = -30.0, 
+        Epos=-30.0, 
+        Eopen=-30.0, 
         force=1.0, 
         L_DNA=1000.0,
         wr_open=-0.7, 
@@ -19,11 +19,11 @@ class FE_fixed_nucl:
         self.P = 25.0       # DNA plectoneme twist persistence length (nm)
         self.h = 3.5        # DNA helix repeat length (nm)
         self.l_nucl = 60.0       # DNA length absorbed by a nucleosome (nm)
-        self.l_nucl_ext = 10.0   # free DNA length for open nucleosomes (nm)
+        self.l_nucl_ext = 0.0   # free DNA length for open nucleosomes (nm)
         self.f = force * 0.25   # external force in kT/nm units
         self.L_DNA = L_DNA      # total DNA length (nm)
         self.lp_cutOff =10.0    # cut-off size for small plectoneme (nm)
-        self.lp_mesh = 30.0     # mesh size for summing over plectoneme size (nm)
+        self.lp_mesh = 10.0     # mesh size for summing over plectoneme size (nm)
 
         # writhe of nucleosome states
         self.wo = wr_open 
@@ -31,15 +31,9 @@ class FE_fixed_nucl:
         self.wn = wr_neg
 
         # binding energies (kT)
-        self.e_neg = Eneg
-        if Epos is None:
-            self.e_open = self.e_neg + 15.0
-        else:
-            self.e_open = float(Eopen)
-        if Epos is None:
-            self.e_pos = self.e_neg + 20.0
-        else:
-            self.e_pos = float(Epos)
+        self.e_neg = float(Eneg)
+        self.e_open = float(Eopen)
+        self.e_pos = float(Epos)
 
         #placeholder values; to be set after minimization.
         self.Emin = 'yet to run minimization'
